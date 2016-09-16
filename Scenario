@@ -1,0 +1,401 @@
+Scenario : Order for delivery
+
+Description : A consumer is going to order a delivery through phone calls.  // Order a Pizza from a PizzaPlace
+
+Objects (with Behaviors and State): 
+	Object : Person
+		State : name, address, mobilenumber,onlineLoginCredentials
+		Behavior : placeCall(),findItem(),placeOrder(),payMoney()   
+
+        Object : Operator
+                State : Name,ID
+                Behavior : DailyOffers(),getOrder(),getPayment()
+          
+        Object : Money
+                State : Card name,Card number, expiry date,zip code,amount
+ 
+        Object : Dashboard
+                State: menu[],ComboOffers
+                Behavor : placeOrder(),validateCard,acceptPayment(),dispatchOrder()
+
+class Person
+ {
+	String name,address,email_id,onlineLoginCredentials;
+	long mobile_number;                                                                                                                                    
+	void placeCall(Operator o){}
+	void AskForTheItemInterested(Operator o){}
+	void placeOrder(){}
+	void payMoney(Operator o){}
+ }
+
+class Operator
+ {
+	String name;
+	number ID;
+	void  tellPersonTodaysDailyOffers(person p){}
+	void  getOrder(person p, dashboard db){}
+	void getPaymentDetails(person p,money m){}
+ }
+
+class Money
+ {
+	string cardName;
+	long CardNumber;
+	number expiryDate,zipCode;
+	float amount;
+ }
+
+class Dashboard
+ { 
+	menu[] items; //list of all the menu items
+	void displayItems(Operator o){}
+	void displayComboOffers(Operator o, person p){}
+	void placeOrder(Operator o, item i){}
+	void validateCard(person p ,Money m){}
+	void acceptPayment(dashboard b,money m){}
+	void dispatchOrder(person p){} 
+ }
+
+class OrderOnline
+ {
+  public static void main(String args[])
+   {
+    Dashboard PizzaHut = new Dashboard();
+    Item CheesePizza= new Item();
+    CheesePizza.name= "CheesePizza";
+    Item VegeterianPizza = new Item();
+    VegeterianPizza.name= "VegeterianPizza";
+    Item NonVegeterianPizza = new Item();
+    NonVegeterianPizza.name= "NonVegeterianPizza";
+    Menu[] items = {CheesePizza,VegeterianPizza,NonVegeterianPizza};
+
+    Person Steve = new Person();
+    Steve.name= "Steve";
+
+    Operator Chip = new Operator();
+    Chip.name = "Chip";
+    Steve.placeCall(Chip);
+    Steve.AskForTheItemInterested(Chip);
+    Chip.tellPersonTodaysDailyOffers(Steve);
+    Steve.placeOrder(PizzaHut);
+    Chip.getOrder(Chip,PizzaHut);
+    Money money = Steve.payMoney(PizzaHut);
+    Chip.GetPaymentDetails(Steve);
+    PizzaHut.validateCard(Steve,Money);
+    PizzaHut.acceptPayment(PizzaHut,Money);
+    PizzaHut.dispatchOrder(Steve);
+   }
+} 
+    
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Scenario : Pay Tuition
+
+Description : A student wants to pay his tuition through myNEU account.
+
+Objects (with Behaviors and State): 
+	Object : Student
+		State : myNEU ID, username, password
+		Behavior : openBrowser(),login(),neuPay(),makePayment(),receiveConfirmation()   
+
+        Object : Bank Account
+                State : bankName,bankType,accountNumber,bankBalance
+                Behavior : receiveRequestForTransferToNEU(),processRequest(),updateBankBalance()
+          
+        Object : NEU Portal
+                State : neuAccount
+                Behavior : displayStudentFees(),acceptPayment(),verifyBankDetails(),sendConfirmationEmail()
+ 
+class Student
+ {
+      string myNEU ID,username,password;
+      void openBrowser(neuPortal np){}
+      void logintoNEUPortal(){}
+      void goToNEUPay(){}
+      void makePayment(){}
+      void receiveConfirmation(bankAccount ba,neuPortal np)
+ }
+
+class BankAccount
+ {     
+      string bankName,accountType;
+      float accountNumber,bankBalance;
+      void receiveRequestForTransferToNEU(neuPortal np){}
+      void processRequest(){}
+      void updateBankBalance(){}
+ }
+
+class NEUPortal
+ {
+      string neuAccount
+      void displayStudentFees(),
+      void acceptPayment(bankAccount ba),
+      void verifyBankDetails(bankAccount ba),
+      void sendConfirmationEmail(bankAccount ba, student s)
+ }
+
+class payFeesThroughNEUPortal
+ {
+      public static void main (String args[])
+       {
+        neuPortal neuPortal = new neuPortal();
+        Student sid = new Student();
+        sid.student= "Sid";
+        bankAccount HDFC = new bankAccount();
+        HDFC.bankAccount = "HDFC";
+        sid.openBrowser(neuPortal);
+        sid.logintoNEUPortal(neuPortal);
+        sid.goToNEUPay();
+        neuPortal.displayStudentFees();
+        sid.makePayment(neuPortal);
+        neuPortal.verifyBankDetails(HDFC);
+        HDFC.receiveRequestForTransferToNEU(neuPortal);
+        neuPortal.acceptPayment(HDFC);
+        HDFC.processRequest();
+        HDFC.updateBankBalance();
+        neuPortal.sendConfirmationEmail(HDFC,Sid);
+        Sid.receiveConfirmation(neuPortal);
+       }
+ }
+      
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Scenario : Booking an Airbnb
+
+Description : A tourist wants to book a house on Airbnb app.
+
+Objects (with Behaviors and State): 
+	Object : Tourist
+		State : name, myairbnbaccount,
+		Behavior : createAnAirbnbAccount(),loginToAirbnbAccount(),searchHouse(),sendRequestToHouseOwner(),
+                           receiveHostApproval(),makePayment(),receiveConfirmationEmail()   
+
+        Object : Host
+                State : name,hostairbnbaccount,location
+                Behavior : receiveRequest(),approveRequest(),getPayment()
+          
+        Object : House
+                State : location,availability
+ 
+        Object : AirbnbApp
+                State: location, listofhosts
+                Behavior : requestLocation(),displayListOfHosts(),RecievePaymentFromTourist(),transferShareToHost(),
+                           sendConfirmationEmailToHost(),updateHostHouseAvailability()
+        Object : Money
+                State : amount
+
+
+class tourist
+{
+ string name,myairbnbaccount;
+ void createAnAirbnbAccount(airbnbapp app){}
+ void loginToAirbnbAccount(airbnbapp app){}
+ void searchHouse(airbnbapp app,host host){}
+ void sendRequestToHouseOwner(host host){}
+ void receiveHostApproval(airbnbapp app){}
+ void makePayment(airbnbapp app,money money){}
+ void receiveConfirmationEmail(airbnbapp app){}
+}
+
+class host
+{
+ string name,hostairbnbaccount,location;
+ void receiveRequest(airbnbapp app){}
+ void approveRequest(airbnb app){}
+ void getPayment(airbnbapp, money money){}
+}
+
+class house
+{
+ string location,availibility;
+}
+
+class AirbnbApp
+{
+ string location,listofhosts;
+ void requestLocation(tourist tourist){}
+ host[] displayListOfHosts;                \\list of all the hosts 
+ void RecievePaymentFromTourist(tourist tourist,money money){}
+ void transferShareToHost(money money,host host){}
+ void sendConfirmationEmail(host host,tourist tourist){}
+ void updateHostHouseAvailability(airbnbapp app){}
+}
+class money
+{
+ float amount;
+}
+
+class bookAHouseOnAirBnbApp
+{ 
+ public static void main (String args[])
+{ 
+ airbnbApp app = new airbnbapp();
+ host John = new host();
+ John.name = "John";
+ host Dave = new host();
+ Dave.name = "Dave";
+ host Eric = new host();
+ Eric.name = "Eric";
+ host[] host = {John,Dave,Eric}; 
+
+ tourist Alina = new tourist();
+ alina.name= "Alina";
+
+ alina.createAnAirbnbAccount(airbnbapp);
+ alina.loginToAirbnbAccount(airbnbapp)
+ airbnb.requestLocation(Alina); 
+ alina.searchHouse(airbnbapp,host);
+ host[] displayListOfHosts;                \\list of all the hosts 
+ alina.sendRequestToHouseOwner(host);
+ john.approveRequest(airbnb);
+ alina.receiveHostApproval(airbnbapp)
+ alina.makePayment(airbnbapp,money);
+ airbnb.getPayment(alina,money);
+ airbnb.RecievePaymentFromTourist(alina,money);
+ airbnb.transferShareToHost(money,John);
+ airbnb.sendConfirmationEmail(john,alina);
+ airbnb.updateHostHouseAvailability(airbnbapp);
+ }
+}  
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+Scenario : Travelling to LA
+
+Description : A tourist is trying to find the cheapest flight to LA.
+
+Objects (with Behaviors and State): 
+	Object : Tourist
+		State : name, address, mobilenumber,onlineLoginCredentials
+		Behavior : Login(),searchForFlight(),selectCheapestAirline(),finalizeFlight(),
+                              
+        Object : Flight
+                State : noofseats,flightnumber,flightarrivaltime,flightdeparturetime
+                
+        Object : Online Airline Portal
+                State: listofavailableairlines
+                Behavior : seatavailabilityOfAirline(),arlinecomparisons(),flightratecomparisons()
+
+class tourist
+{
+ string name,address,onlineLoginCredentials;
+ long mobilenumber;
+ void Login(onlineAirlinePortal oap){}
+ void searchForFlight(onlineAirlinePortal oap){}
+ void selectCheapestAirline(onlineAirlinePortal oap){}
+ void finalizeFlight(online airline portal oap){}
+}
+
+class flight
+{
+ number noofseats;
+ string flightnumber;
+ date flightarrivaltime,flightdeparturetime;
+}
+
+class onlineAirlineportal
+{
+ list[] listofAvailableAirlines;
+ void seatavailabilityOfAirline(onlineAirlinePortal oap,flight flight){}
+ void arlinecomparisons(onlineAirlinePortal oap,flight flight){} 
+ void flightratecomparisons(onlineAirlinePortal oap,flight flight){}
+}
+
+class searchForCheapestFlight
+{
+ public static void main (String args[])
+ {
+  onlineairlineportal makemytrip = new onlineairlineportal();
+  
+  list emirates = new emirates();
+  emirates.name = "Emirates";
+  list lufthansa = new lufthansa();
+  lufthansa.name = "Lufthansa";
+  list delta = new delta();
+  delta.name = "Delta";
+  list [] listOfAvailableAirlines = {Emirates,Lufthansa,Delta};
+  
+  tourist Adam = new tourist();
+  adam.name = "Adam";
+ 
+  adam.Login(onlineAirlinePortal);
+  adam.searchForFlight(onlineAirlinePortal,flight);
+  adam.selectCheapestAirline(onlineAirlinePortal);
+  makemytrip.airlinecomparisons(onlineAirlinePortal,flight) 
+  makemytrip.flightratecomparisons(onlineAirlinePortal,flight);
+  flight.seatavailabilityOfAirline(onlineAirlinePortal,flight)
+  adam.finalizeFlight(onlineairlineportal);
+ }
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Scenario : Drive home
+
+Description : A student is driving home from school.
+
+Objects (with Behaviors and State): 
+	Object : Student
+		State : name, current location
+		Behavior : turnOnGPS(),enterDestiantionOnGPS(), driveVehicle()
+	
+	
+	Object : Vehicle
+		State : vehicletype,vehicle number,vehicle model
+		Behavior : powerONEngine(), provideMobility(), powerOffEngine()
+	
+	Object : GPS
+		State : map, directions
+		Behavior : CheckCurrentLocation(),acceptDestination(),calculateOptimalRoute(),provideDirections()
+
+class Student
+{
+string name;
+string current location;
+void turnOnGps(GPS GPS){}
+void enterDestinationOnGPS(GPS GPS){}
+}
+
+class Vehicle
+{
+string vehicleType,vehicleModel;
+number vehiclenumber;
+void powerONEngine(){}
+void provideMobility(){}
+void powerOffEngine(){}
+}
+
+class GPS
+{
+ string map,directions;
+ void CheckCurrentLocation(){}
+ void acceptDestination(){}
+ void calculateOptimalRoute(){}
+ void provideDirections(){}
+}
+
+class driveFromSchoolToHome
+{
+ public static void main(String args[])
+ {
+  student Nirav = new student();   
+  nirav.name = "Nirav";
+  GPS GPS = new GPS();
+  GPS.name= "GPS";
+  vehicle hondaCivic = new vehicle();
+  hondaCivic.name= "hondaCivic";  
+  nirav.turnOnGps(GPS);
+  GPS.CheckCurrentLocation()
+  nirav.enterDestinationOnGPS(GPS);
+  GPS.acceptDestination(); 
+  GPS.calculateOptimalRoute();
+  hondaCivic.powerONEngine();
+  GPS.provideDirections(nirav);
+  hondaCivic.provideMobility();
+  hondaCivic.powerOffEngine();
+ }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------ 
+ 
+   
